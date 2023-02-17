@@ -8,20 +8,6 @@ A simplistic network that turns scribbles to mask. It supports multi-object segm
 
 ![Ex1](https://imgur.com/HesuB4x.gif) ![Ex2](https://imgur.com/NmCrCE1.gif)
 
-## Requirements
-
-The package versions shown here are the ones that I used. You might not need the exact versions.
-
-- PyTorch `1.6.0`
-- torchvision `0.7.0`
-- opencv-contrib `4.2.0`
-- gitpython for training
-- gdown for downloading pretrained models
-
-Refer to the official [PyTorch guide](https://pytorch.org/) for installing PyTorch/torchvision. The rest can be installed by:
-
-`pip install opencv-contrib-python gitpython gdown`
-
 ## Interactive GUI
 
 `python interactive.py --image <image>`
@@ -61,6 +47,7 @@ The model almost always needs to focus on at least one object. It is very diffic
 ### Commands
 
 Use the `deeplabv3plus_resnet50` pretrained model provided [here](https://github.com/VainF/DeepLabV3Plus-Pytorch).
+**You should install Pytorch with cuda at first.**
 
 `CUDA_VISIBLE_DEVICES=0,1 OMP_NUM_THREADS=4 python -m torch.distributed.launch --master_port 9842 --nproc_per_node=2 train.py --id s2m --load_deeplab <path_to_deeplab.pth>`
 
