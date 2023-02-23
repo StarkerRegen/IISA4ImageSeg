@@ -80,14 +80,19 @@ def comp_image(image, mask, p_srb, n_srb):
     comp[n_srb>0.5, :] = np.array([255, 0, 0], dtype=np.uint8)
     return comp
 
-def main():
-    container = st.container()
-
-    # network stuff
+@st.cache
+def load_model():
     net = S2M()
     net.load_state_dict(torch.load('saves/s2m.pth', map_location='cpu'))
     net = net.eval()
     torch.set_grad_enabled(False)
+    return net
+
+def main():
+    container = st.container()
+
+    # network stuff
+    net = load_model()
     bg_image_file = container.file_uploader("首帧图片", type=['jpg', 'png'], label_visibility="hidden")
     bg_image = Image.open(bg_image_file).convert('RGB') if bg_image_file is not None else None
     col1, col2 = container.columns(2)
