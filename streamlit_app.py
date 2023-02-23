@@ -80,7 +80,7 @@ def comp_image(image, mask, p_srb, n_srb):
     comp[n_srb>0.5, :] = np.array([255, 0, 0], dtype=np.uint8)
     return comp
 
-@st.cache
+@st.cache_resource
 def load_model():
     net = S2M()
     net.load_state_dict(torch.load('saves/s2m.pth', map_location='cpu'))
