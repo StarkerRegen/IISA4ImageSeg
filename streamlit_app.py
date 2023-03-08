@@ -1,3 +1,4 @@
+import time
 import numpy as np
 import streamlit as st
 from PIL import Image
@@ -160,10 +161,13 @@ def main():
                 manager.p_srb = canvas_result.image_data[:,:,0]
                 # else:
                 #    manager.n_srb = canvas_result.image_data[:,:,0]
+                pre = time.time()
                 np_mask = manager.run_s2m()
                 out = cv2.resize(np_mask, (shape[0],shape[1]))
                 buf = io.BytesIO()
                 Image.fromarray(out).save(buf, format='png')
+                dur = time.time() - pre
+                col2.text(dur)
                 if showMask:
                     st.image(out, caption="mask", width=w)
                 else:
